@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ object.title }}{% endblock %}
+{% block content %}
+<h1>{{ object.title }}</h1>
+<p><strong>Location:</strong> {{ object.location }} | <strong>Type:</strong> {{ object.get_job_type_display }}</p>
+<hr>
+<div>{{ object.description|linebreaks }}</div>
+
+{% if user.is_authenticated and user.is_applicant %}
+  {% if already_applied %}
+    <p class="alert alert-info mt-4">You've already applied.</p>
+  {% else %}
+    <hr>
+    <h4>Apply for this job</h4>
+    <form method="post" enctype="multipart/form-data" action="{% url 'jobs:apply_job' job.pk %}">
+      {% csrf_token %}
+      {{ app_form|crispy }}
+      <button type="submit" class="btn btn-primary mt-2">Submit Application</button>
+    </form>
+  {% endif %}
+{% endif %}
+
+{% if user == object.company %}
+  <hr class="mt-4">
+  <a href="{% url 'jobs:job_update' object.pk %}" class="btn btn-secondary">Edit</a>
+  <a href="{% url 'jobs:job_delete' object.pk %}" class="btn btn-danger">Delete</a>
+{% endif %}
+{% endblock %}

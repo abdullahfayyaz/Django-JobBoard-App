@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}{{ view.object|default:"Post Job" }}{% endblock %}
+{% block content %}
+<h1>{{ view.object|default:"Post Job" }}</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form|crispy}}
+  <button type="submit" class="btn btn-success mt-2">Save</button>
+  <a href="{% url 'jobs:job_list' %}" class="btn btn-secondary mt-2">Cancel</a>
+</form>
+{% endblock %}

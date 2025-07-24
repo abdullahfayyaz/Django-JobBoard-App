@@ -1,0 +1,123 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}Sign Up - JobBoard{% endblock %}
+
+{% block content %}
+<div class="form-container">
+  <div class="form-header">
+    <div class="text-center mb-4">
+      <i class="fas fa-user-plus fa-3x text-primary mb-3"></i>
+    </div>
+    <h2>Join JobBoard</h2>
+    <p class="text-muted">Create your account to get started</p>
+  </div>
+  
+  <form method="post" class="needs-validation" novalidate>
+    {% csrf_token %}
+    
+    <div class="form-group">
+      <label for="{{ form.username.id_for_label }}" class="form-label">
+        <i class="fas fa-user me-2"></i>Username
+      </label>
+      {{ form.username }}
+      {% if form.username.errors %}
+        <div class="text-danger mt-1">
+          {% for error in form.username.errors %}
+            <small>{{ error }}</small>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if form.username.help_text %}
+        <small class="text-muted">{{ form.username.help_text }}</small>
+      {% endif %}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ form.email.id_for_label }}" class="form-label">
+        <i class="fas fa-envelope me-2"></i>Email Address
+      </label>
+      {{ form.email }}
+      {% if form.email.errors %}
+        <div class="text-danger mt-1">
+          {% for error in form.email.errors %}
+            <small>{{ error }}</small>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ form.password1.id_for_label }}" class="form-label">
+        <i class="fas fa-lock me-2"></i>Password
+      </label>
+      {{ form.password1 }}
+      {% if form.password1.errors %}
+        <div class="text-danger mt-1">
+          {% for error in form.password1.errors %}
+            <small>{{ error }}</small>
+          {% endfor %}
+        </div>
+      {% endif %}
+      {% if form.password1.help_text %}
+        <small class="text-muted">{{ form.password1.help_text }}</small>
+      {% endif %}
+    </div>
+    
+    <div class="form-group">
+      <label for="{{ form.password2.id_for_label }}" class="form-label">
+        <i class="fas fa-lock me-2"></i>Confirm Password
+      </label>
+      {{ form.password2 }}
+      {% if form.password2.errors %}
+        <div class="text-danger mt-1">
+          {% for error in form.password2.errors %}
+            <small>{{ error }}</small>
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+    
+    <!-- Account Type Selection (if exists in form) -->
+    {% if form.is_company %}
+      <div class="form-group">
+        <label class="form-label">
+          <i class="fas fa-users me-2"></i>Account Type
+        </label>
+        <div class="form-check">
+          {{ form.is_company }}
+          <label class="form-check-label" for="{{ form.is_company.id_for_label }}">
+            I'm posting jobs (Company Account)
+          </label>
+        </div>
+        {% if form.is_company.errors %}
+          <div class="text-danger mt-1">
+            {% for error in form.is_company.errors %}
+              <small>{{ error }}</small>
+            {% endfor %}
+          </div>
+        {% endif %}
+      </div>
+    {% endif %}
+    
+    {% if form.non_field_errors %}
+      <div class="alert alert-danger">
+        {% for error in form.non_field_errors %}
+          {{ error }}
+        {% endfor %}
+      </div>
+    {% endif %}
+    
+    <button type="submit" class="btn btn-primary w-100 mt-4">
+      <i class="fas fa-user-plus me-2"></i>Create Account
+    </button>
+  </form>
+  
+  <div class="text-center mt-4">
+    <p class="text-muted">
+      Already have an account? 
+      <a href="{% url 'accounts:login' %}" class="text-primary">Sign in here</a>
+    </p>
+  </div>
+</div>
+{% endblock %}
+
