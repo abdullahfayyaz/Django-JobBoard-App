@@ -26,7 +26,32 @@ A full-featured job board application built with Django. Companies can post jobs
 ## 🔧 Setup & Installation
 
 1. Clone this repo:  
-[   ```bash
-   git clone https://github.com/yourname/django-jobboard.git
-   cd django-jobboard](https://github.com/abdullahfayyaz/Django-JobBoard-App.git
-)
+https://github.com/abdullahfayyaz/Django-JobBoard-App.git
+
+2. Create virtual environment & install dependencies:
+python -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+
+3. Configure MySQL (or any DB) in settings.py:
+DATABASES = {
+  'default': {
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'jobboard_db',
+    'USER': 'your_user',
+    'PASSWORD': 'your_pass',
+    'HOST': 'localhost',
+    'PORT': '3306',
+  }
+}
+
+4. Run migrations & create superuser:
+python manage.py makemigrations
+python manage.py migrate
+python manage.py createsuperuser
+
+5. Collect static files and start the server:
+python manage.py collectstatic
+python manage.py runserver
+
+Navigate to http://127.0.0.1:8000/
